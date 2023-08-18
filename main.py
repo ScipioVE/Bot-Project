@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from credentials import EMAIL, PASSWORD
+from regioncodes import region_code
 import time
 import os
 
@@ -71,7 +72,12 @@ def enable_auto():
    
 def move_to_region():
     # Logic for moving to a region
-    pass
+    url_input = input("Ingrese el url: ")
+    region_url = f"https:///rivalregions.com/#map/details/{region_code(url_input)}"
+    driver.get(region_url)
+    time.sleep(2)
+    driver.refresh()
+    time.sleep(10)
 
 def ask_only_for_wp():
     # Logic for asking only for WP
