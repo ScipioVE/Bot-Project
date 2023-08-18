@@ -66,10 +66,7 @@ def enable_auto():
    
     except Exception as e:
                 print("Error:", type(e).__name__, str(e))
-    
 
-
-   
 def move_to_region():
     # Logic for moving to a region
     url_input = input("Ingrese el url: ")
@@ -77,7 +74,18 @@ def move_to_region():
     driver.get(region_url)
     time.sleep(2)
     driver.refresh()
-    time.sleep(10)
+    time.sleep(5)
+
+    try:
+        move_btn_xpath = "//div[@class='button_green region_details_move' and text()='Move here']"
+        move_btn = WAIT.until(EC.presence_of_element_located((By.XPATH, move_btn_xpath)))
+        move_btn.click()
+        time.sleep(25)
+
+
+    
+    except Exception as e:
+        print("Error:", type(e).__name__, str(e))
 
 def ask_only_for_wp():
     # Logic for asking only for WP
