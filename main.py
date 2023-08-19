@@ -80,7 +80,42 @@ def move_to_region():
         move_btn_xpath = "//div[@class='button_green region_details_move' and text()='Move here']"
         move_btn = WAIT.until(EC.presence_of_element_located((By.XPATH, move_btn_xpath)))
         move_btn.click()
-        time.sleep(25)
+        time.sleep(5)
+
+        dropdown_toggle_xpath = '//div[@class="dd-selected"]'
+        dropdown_toggle = driver.find_element(By.XPATH, dropdown_toggle_xpath)
+        dropdown_toggle.click()
+
+        WAIT
+         # Find all the list items within the dropdown list
+        dropdown_list_xpath = '//ul[@class="dd-options dd-click-off-close"]'
+        dropdown_list = WAIT.until(EC.visibility_of_element_located((By.XPATH, dropdown_list_xpath)))
+
+            
+        dropdown_items_xpath = './li/a[@class="dd-option"]'
+        dropdown_items = dropdown_list.find_elements(By.XPATH, dropdown_items_xpath)
+
+         # Iterate through the list items and perform actions
+        for item in dropdown_items:
+         target_item = item.find_element(By.XPATH, './input[@class="dd-option-value"]')
+         hidden_value = target_item.get_attribute('value')
+
+    
+         if hidden_value == 1 or '1':
+           driver.execute_script("arguments[0].click()", target_item)
+
+
+
+        confirm_move_btn_xpath = '//div[@id="move_here" and contains(@class, "button_blue map_d_b imp")]'
+        confirm_move_btn = WAIT.until(EC.presence_of_element_located((By.XPATH, confirm_move_btn_xpath)))
+        confirm_move_btn.click()
+        WAIT
+        time.sleep(2)
+        green_confirm_btn_xpath = '//div[@id="move_here_ok" and contains(@class, "button_green map_d_b")]'
+        green_confirm_btn = WAIT.until(EC.presence_of_element_located((By.XPATH, green_confirm_btn_xpath)))
+        green_confirm_btn.click()
+
+        time.sleep(10) 
 
 
     
