@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from credentials import EMAIL, PASSWORD
-from regioncodes import region_code
+from regioncodes import region_code, stateORregion
 import time
 import os
 import RR_Paths
@@ -109,11 +109,12 @@ def move_to_region():
 
             if hidden_value == 1 or "1":
                 driver.execute_script("arguments[0].click()", target_item)
-
+        # Click the Blue move buttom
         confirm_move_btn = WAIT.until(
             EC.presence_of_element_located((By.XPATH, RR_Paths.confirm_move_btn_xpath))
         )
         confirm_move_btn.click()
+        # Driver wait and then click the green move to buttom
         WAIT
         green_confirm_btn = WAIT.until(
             EC.presence_of_element_located((By.XPATH, RR_Paths.green_confirm_btn_xpath))
@@ -126,8 +127,25 @@ def move_to_region():
 
 
 def ask_only_for_wp():
-    # Logic for asking only for WP
-    pass
+    wp_input = input("Ingrese el url: ")
+
+    wp_url = stateORregion(wp_input)
+
+    time.sleep(3)
+
+    driver.get(wp_url)
+    time.sleep(1)
+    driver.refresh()
+    time.sleep(1)
+
+    try:
+        WAIT
+        wp_btn = WAIT.until(
+            EC.presence_of_element_located((By.XPATH, RR_Paths.wp_btn_xpath))
+        )
+        wp_btn.click()
+    except Exception as e:
+        print("Error:", type(e).__name__, str(e))
 
 
 def logout():

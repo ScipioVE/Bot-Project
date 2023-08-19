@@ -11,6 +11,11 @@ dropdown_items_xpath = './li/a[@class="dd-option"]'
 confirm_move_btn_xpath = '//div[@id="move_here" and contains(@class, "button_blue map_d_b imp")]'
 green_confirm_btn_xpath = '//div[@id="move_here_ok" and contains(@class, "button_green map_d_b")]'
 
+# Asking for WP
+
+wp_btn_xpath = '//div[@class="button_blue tip region_details_add_request_perm" and contains(text(), "Work permit")]'
+
+
 # Logout 
 
 header_setups_xpath = "//div[@id='header_setups']"
