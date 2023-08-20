@@ -1,3 +1,10 @@
+# Energy Recharge
+
+gold_xpath ="//span[@id='g']"
+storage_xpath = "//div[@class='item_menu storage_menu ajax_action header_menu_item tc']"
+gold_div_xpath = "//div[@url='17']//div[@class='storage_number']//span[@class='storage_number_change']"
+storage_produce_xpath = "//input[@class='storage_produce_ammount float_right imp white tpbg']"
+produce_green_btn = "//div[@class='button_green storage_produce_button']"
 # Automode Paths
 
 work_xpath = "//div[@action='work' and @class='item_menu work_menu ajax_action header_menu_item tc']"
