@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from credentials import EMAIL, PASSWORD
-from regioncodes import region_code, stateORregion
+from definitions import region_code, stateORregion, gold_checker
 import time
 import os
 import RR_Paths
@@ -44,8 +44,48 @@ def handle_choice():
         print("Invalid input. Please enter a number.")
 
 
+def energy_recharge():
+    gold_display = driver.find_element(By.XPATH, RR_Paths.gold_xpath)
+    recharge_energy, gold_amount = gold_checker(
+        gold_display.get_attribute("textContent")
+    )
+
+    if recharge_energy:
+        try:
+            storage_btn = driver.find_element(By.XPATH, RR_Paths.storage_xpath)
+            storage_btn.click()
+            time.sleep(2)
+            gold_div = WAIT.until(
+                EC.presence_of_all_elements_located((By.XPATH, RR_Paths.gold_div_xpath))
+            )
+
+            time.sleep(2)
+            gold_div[0].click()
+            time.sleep(2)
+            print("trying click on produce btn...")
+            storage_produce_btn = driver.find_element(
+                By.XPATH, RR_Paths.storage_produce_xpath
+            )
+            storage_produce_btn.clear()
+            time.sleep(5)
+            print("sending keys...")
+            storage_produce_btn.send_keys(str(gold_amount))
+            time.sleep(5)
+            produce_green_btn = WAIT.until(
+                EC.presence_of_element_located((By.XPATH, RR_Paths.produce_green_btn))
+            )
+            produce_green_btn.click()
+            WAIT
+
+        except Exception as e:
+            print("Error:", type(e).__name__, str(e))
+    else:
+        print(f" gold amount: {gold_amount}")
+
+
 def enable_auto():
     try:
+        energy_recharge()
         work_action = driver.find_element(By.XPATH, RR_Paths.work_xpath)
         work_action.click()
 
